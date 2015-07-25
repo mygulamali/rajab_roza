@@ -84,3 +84,12 @@ class HijriDate(object):
         year = int(100*b + d - 4800 + m/10)
 
         return GregorianDate(year, month, day)
+
+    @staticmethod
+    def from_gregorian(date=GregorianDate(2011, 3, 25)):
+        a = (14 - date.month)//12
+        y = date.year + 4800 - a
+        m = date.month + 12*a - 3
+        jd = date.day + ((153*m + 2)//5) + 365*y + y//4 - y//100 + y//400 - 32045
+
+        return HijriDate.from_jd(jd)

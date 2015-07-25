@@ -32,3 +32,7 @@ class TestHijriDate:
 
     def test_conversion_to_gregorian(self):
         assert self.date.to_gregorian() == datetime.date(2011, 3, 25)
+
+    def test_conversion_from_gregorian(self):
+        gregorian_date = datetime.date(2011, 3, 25)
+        assert HijriDate.from_gregorian(gregorian_date) == self.date
