@@ -1,3 +1,4 @@
+import datetime
 import nose
 from hijri_date import HijriDate
 
@@ -28,3 +29,6 @@ class TestHijriDate:
 
     def test_conversion_from_jd(self):
         assert HijriDate.from_jd(2455646) == self.date
+
+    def test_conversion_to_gregorian(self):
+        assert self.date.to_gregorian() == datetime.date(2011, 3, 25)

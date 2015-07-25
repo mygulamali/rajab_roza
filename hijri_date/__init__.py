@@ -1,3 +1,4 @@
+from datetime import date as GregorianDate
 from math import floor
 from hijri_date.constants import *
 
@@ -69,3 +70,17 @@ class HijriDate(object):
             day = int(left)
 
         return HijriDate(year, month, day)
+
+    def to_gregorian(self):
+        a = self.to_jd() + 32044
+        b = (4*a + 3)//146097
+        c = a - (146097*b)//4
+        d = (4*c + 3)//1461
+        e = c - (1461*d)//4
+        m = (5*e + 2)//153
+
+        day = int(e + 1 - (153*m + 2)//5)
+        month = int(m + 3 - 12*(m//10))
+        year = int(100*b + d - 4800 + m/10)
+
+        return GregorianDate(year, month, day)
