@@ -33,7 +33,7 @@ class HijriDate(object):
             return self.date
         return DAYS_IN_YEAR[self.month - 2] + self.date
 
-    def jd(self):
+    def to_jd(self):
         y30 = floor(self.year / 30.0)
         if (self.year % 30 == 0):
             return 1948084 + y30*10631 + self.day_of_year()
@@ -43,3 +43,29 @@ class HijriDate(object):
             DAYS_IN_30_YEARS[self.year - y30*30 - 1],
             self.day_of_year()
         ]))
+
+    @staticmethod
+    def from_jd(julian_day_number=1948084):
+        left = int(julian_day_number - 1948084)
+        y30 = floor(left / 10631.0)
+        left -= y30*10631
+        i = 0
+
+        while left > DAYS_IN_30_YEARS[i]:
+            i += 1
+        year = int(y30*30.0 + i)
+
+        if i>0:
+            left -= DAYS_IN_30_YEARS[i - 1]
+        i = 0
+
+        while left > DAYS_IN_YEAR[i]:
+            i += 1
+        month = int(i + 1)
+
+        if i>0:
+            day = int(left - DAYS_IN_YEAR[i - 1])
+        else:
+            day = int(left)
+
+        return HijriDate(year, month, day)
