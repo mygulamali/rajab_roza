@@ -19,3 +19,6 @@ class TestHijriDate:
         assert HijriDate(1432, 1, 10).day_of_year() == 10
         assert HijriDate(1431, 12, 30).day_of_year() == 355
         assert HijriDate(1432, 12, 29).day_of_year() == 354
+
+    def test_conversion_to_jd(self):
+        assert self.date.jd() == 2455646
