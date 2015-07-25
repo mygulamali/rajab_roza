@@ -13,3 +13,9 @@ class TestHijriDate:
         assert self.date.days_in_month() == 29
         assert self.date.days_in_month(12) == 29
         assert self.date.days_in_month(12, 1431) == 30
+
+    def test_day_of_year(self):
+        assert self.date.day_of_year() == 109
+        assert HijriDate(1432, 1, 10).day_of_year() == 10
+        assert HijriDate(1431, 12, 30).day_of_year() == 355
+        assert HijriDate(1432, 12, 29).day_of_year() == 354

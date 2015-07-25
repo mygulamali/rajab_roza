@@ -23,3 +23,8 @@ class HijriDate(object):
         if (month == 12 and self.is_kabisa(year)) or (month % 2 == 1):
             return 30
         return 29
+
+    def day_of_year(self):
+        if self.month == 1:
+            return self.date
+        return DAYS_IN_YEAR[self.month - 2] + self.date
