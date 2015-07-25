@@ -22,3 +22,6 @@ class TestHijriDate:
 
     def test_conversion_to_jd(self):
         assert self.date.jd() == 2455646
+
+    def test_equality(self):
+        assert HijriDate() == self.date

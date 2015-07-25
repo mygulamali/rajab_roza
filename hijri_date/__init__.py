@@ -7,6 +7,9 @@ class HijriDate(object):
         self.month = month
         self.date = date
 
+    def __eq__(self, other):
+        return (self.year == other.year) and (self.month == other.month) and (self.date == other.date)
+
     def is_kabisa(self, year=None):
         if year == None:
             year = self.year
