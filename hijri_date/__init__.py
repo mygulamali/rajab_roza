@@ -1,3 +1,5 @@
+from hijri_date.constants import *
+
 class HijriDate(object):
     def __init__(self, year=1432, month=4, date=20):
         self.year = year
@@ -7,7 +9,7 @@ class HijriDate(object):
     def is_kabisa(self, year=None):
         if year == None:
             year = self.year
-        for i in [2, 5, 8, 10, 13, 16, 19, 21, 24, 27, 29]:
+        for i in KABISA_YEAR_REMAINDERS:
             if (year % 30 == i):
                 return True
         return False
