@@ -1,7 +1,13 @@
+import requests
+
 class USNO_Data:
+    USNO_URL = "http://aa.usno.navy.mil/cgi-bin/aa_rstablew.pl"
+
     def __init__(self, lat, lng):
         self.lat = lat
         self.lng = lng
+        self.data = None
+        self.session = requests.Session()
 
     @staticmethod
     def angle_components(angle):
@@ -32,3 +38,6 @@ class USNO_Data:
             "zz1": "0", # UTC
             "ZZZ": "END"
         }
+
+    def get_data(self, year):
+        self.data = self.session.post(USNO_Data.USNO_URL, self.parameters(year))

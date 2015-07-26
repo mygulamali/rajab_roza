@@ -1,5 +1,10 @@
+from betamax import Betamax
 import nose
+import requests
 from usno_data import USNO_Data
+
+with Betamax.configure() as config:
+    config.cassette_library_dir = 'tests/cassettes'
 
 class TestUSNO_Data:
     def setup(self):
@@ -7,6 +12,11 @@ class TestUSNO_Data:
         self.lng = -22.0/60.0
         self.year = 2015
         self.usno_data = USNO_Data(self.lat, self.lng)
+        self.recorder = Betamax(self.usno_data.session, default_cassette_options={
+            'record_mode': 'new_episodes',
+            'match_requests_on': ['method', 'uri', 'headers'],
+            'preserve_exact_body_bytes': True
+        })
 
     def test_angle_components(self):
         (direction, degrees, minutes) = USNO_Data.angle_components(self.lat)
@@ -31,3 +41,8 @@ class TestUSNO_Data:
             "ZZZ": "END"
         }
         assert self.usno_data.parameters(self.year) == expected_parameters
+
+    def test_get_data(self):
+        with self.recorder.use_cassette('get_data'):
+            self.usno_data.get_data(self.year)
+            assert self.usno_data.data is not None
