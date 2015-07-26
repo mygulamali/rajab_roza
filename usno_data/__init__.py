@@ -5,6 +5,7 @@ class USNO_Data:
 
     @staticmethod
     def angle_components(angle):
+        direction = -1 if (angle < 0.0) else 1
         degrees = int(angle)
-        minutes = (angle - degrees)*60.0
-        return (degrees, minutes)
+        minutes = round((angle - degrees)*60)
+        return (direction, abs(degrees), abs(minutes))
