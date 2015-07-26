@@ -13,7 +13,7 @@ class TestUSNO_Data:
         self.year = 2015
         self.usno_data = USNO_Data(self.lat, self.lng)
         self.recorder = Betamax(self.usno_data.session, default_cassette_options={
-            'record_mode': 'new_episodes',
+            'record_mode': 'once',
             'match_requests_on': ['method', 'uri', 'headers'],
             'preserve_exact_body_bytes': True
         })
