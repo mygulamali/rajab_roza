@@ -16,18 +16,18 @@ class TestUSNO_Data:
 
     def test_parameters(self):
         expected_parameters = {
-            "FFX": 2,
-            "xxy": self.year,
-            "tabtyb": 0,
+            "FFX": "2",
+            "xxy": "2015",
+            "tabtyb": "0",
             "place": "",
-            "xx0": -1,
-            "xx1": 0,
-            "xx2": 22,
-            "yy0": 1,
-            "yy1": 51,
-            "yy2": 32,
-            "zz0": 1,
-            "zz1": 0,
+            "xx0": "-1",
+            "xx1": "0",
+            "xx2": "22",
+            "yy0": "1",
+            "yy1": "51",
+            "yy2": "32",
+            "zz0": "1",
+            "zz1": "0",
             "ZZZ": "END"
         }
         assert self.usno_data.parameters(self.year) == expected_parameters
