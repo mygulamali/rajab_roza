@@ -17,7 +17,7 @@ class USNO_Data:
         return {
             "FFX": "2",
             "xxy": str(year),
-            "tabtyb": "0", # table of sunrise/sunset times
+            "type": "0", # table of sunrise/sunset times
             "place": "",
             # longitude
             "xx0": str(lng_direction), # west = -1, east = 1

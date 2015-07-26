@@ -18,7 +18,7 @@ class TestUSNO_Data:
         expected_parameters = {
             "FFX": "2",
             "xxy": "2015",
-            "tabtyb": "0",
+            "type": "0",
             "place": "",
             "xx0": "-1",
             "xx1": "0",
