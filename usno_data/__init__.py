@@ -8,7 +8,8 @@ class USNO_Data:
         self.lat = lat
         self.lng = lng
         self.year = None
-        self.data = None
+        self.sunrises = None
+        self.sunsets = None
         self.session = requests.Session()
 
     @staticmethod
@@ -48,6 +49,37 @@ class USNO_Data:
         datetime_string = "{0:04}-{1:02}-{2:02} {3} UTC".format(year, month, day, time_string)
         return datetime.strptime(datetime_string, "%Y-%m-%d %H%M %Z")
 
+    @staticmethod
+    def extract_times(year, data):
+        sunrises = [[], [], [], [], [], [], [], [], [], [], [], []]
+        sunsets = [[], [], [], [], [], [], [], [], [], [], [], []]
+
+        lines = data.split("\n")[18:(18 + 31)]
+        for line in lines:
+            times = line.split()
+            if len(times) == 23:
+                [times.insert(i, None) for i in [3, 4]]
+            elif len(times) == 15:
+                [times.insert(i, None) for i in [3, 4, 7, 8, 11, 12, 17, 18, 21, 22]]
+
+            day = int(times[0])
+            for month in range(12):
+                sunrises[month].append(
+                    USNO_Data.as_datetime(year, month + 1, day, times[2*month + 1])
+                )
+                sunsets[month].append(
+                    USNO_Data.as_datetime(year, month + 1, day, times[2*(month + 1)])
+                )
+
+        return (sunrises, sunsets)
+
     def get_data(self, year):
         self.year = year
-        self.data = self.session.post(USNO_Data.USNO_URL, data=self.parameters())
+        data = self.session.post(USNO_Data.USNO_URL, data=self.parameters())
+        (self.sunrises, self.sunsets) = USNO_Data.extract_times(self.year, data.text)
+
+    def sunrise(self, month, day):
+        return self.sunrises[month - 1][day - 1]
+
+    def sunset(self, month, day):
+        return self.sunsets[month - 1][day - 1]

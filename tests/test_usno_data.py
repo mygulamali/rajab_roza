@@ -56,4 +56,19 @@ class TestUSNO_Data:
     def test_get_data(self):
         with self.recorder.use_cassette('get_data'):
             self.usno_data.get_data(self.year)
-            assert self.usno_data.data is not None
+            assert self.usno_data.sunrises is not None
+            assert self.usno_data.sunsets is not None
+
+    def test_sunrise(self):
+        with self.recorder.use_cassette('get_sunrise'):
+            self.usno_data.get_data(self.year)
+            sunrise = self.usno_data.sunrise(2, 22)
+            assert sunrise.hour == 7
+            assert sunrise.minute == 2
+
+    def test_sunset(self):
+        with self.recorder.use_cassette('get_sunset'):
+            self.usno_data.get_data(self.year)
+            sunset = self.usno_data.sunset(2, 22)
+            assert sunset.hour == 17
+            assert sunset.minute == 29
