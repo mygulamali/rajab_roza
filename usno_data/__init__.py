@@ -1,3 +1,4 @@
+from datetime import datetime
 import requests
 
 class USNO_Data:
@@ -38,6 +39,13 @@ class USNO_Data:
             "zz1": "0", # UTC
             "ZZZ": "END"
         }
+
+    @staticmethod
+    def as_datetime(year, month, day, time_string):
+        if not time_string:
+            return None
+        datetime_string = "{0:04}-{1:02}-{2:02} {3} UTC".format(year, month, day, time_string)
+        return datetime.strptime(datetime_string, "%Y-%m-%d %H%M %Z")
 
     def get_data(self, year):
         self.data = self.session.post(USNO_Data.USNO_URL, data=self.parameters(year))

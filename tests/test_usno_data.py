@@ -42,6 +42,16 @@ class TestUSNO_Data:
         }
         assert self.usno_data.parameters(self.year) == expected_parameters
 
+    def test_as_datetime(self):
+        date = USNO_Data.as_datetime(self.year, 2, 22, '2153')
+        assert date.year == self.year
+        assert date.month == 2
+        assert date.day == 22
+        assert date.hour == 21
+        assert date.minute == 53
+        assert date.second == 0
+        assert date.utcoffset() is None
+
     def test_get_data(self):
         with self.recorder.use_cassette('get_data'):
             self.usno_data.get_data(self.year)
