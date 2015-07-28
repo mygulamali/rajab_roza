@@ -7,6 +7,7 @@ class USNO_Data:
     def __init__(self, lat, lng):
         self.lat = lat
         self.lng = lng
+        self.year = None
         self.data = None
         self.session = requests.Session()
 
@@ -17,13 +18,13 @@ class USNO_Data:
         minutes = round((angle - degrees)*60)
         return (direction, abs(degrees), abs(minutes))
 
-    def parameters(self, year):
+    def parameters(self):
         (lat_direction, lat_degrees, lat_minutes) = USNO_Data.angle_components(self.lat)
         (lng_direction, lng_degrees, lng_minutes) = USNO_Data.angle_components(self.lng)
 
         return {
             "FFX": "2",
-            "xxy": str(year),
+            "xxy": str(self.year),
             "type": "0", # table of sunrise/sunset times
             "place": "",
             # longitude
@@ -48,4 +49,5 @@ class USNO_Data:
         return datetime.strptime(datetime_string, "%Y-%m-%d %H%M %Z")
 
     def get_data(self, year):
-        self.data = self.session.post(USNO_Data.USNO_URL, data=self.parameters(year))
+        self.year = year
+        self.data = self.session.post(USNO_Data.USNO_URL, data=self.parameters())

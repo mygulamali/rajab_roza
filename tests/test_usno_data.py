@@ -40,7 +40,8 @@ class TestUSNO_Data:
             "zz1": "0",
             "ZZZ": "END"
         }
-        assert self.usno_data.parameters(self.year) == expected_parameters
+        self.usno_data.year = 2015
+        assert self.usno_data.parameters() == expected_parameters
 
     def test_as_datetime(self):
         date = USNO_Data.as_datetime(self.year, 2, 22, '2153')
