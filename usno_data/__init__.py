@@ -40,4 +40,4 @@ class USNO_Data:
         }
 
     def get_data(self, year):
-        self.data = self.session.post(USNO_Data.USNO_URL, self.parameters(year))
+        self.data = self.session.post(USNO_Data.USNO_URL, data=self.parameters(year))
