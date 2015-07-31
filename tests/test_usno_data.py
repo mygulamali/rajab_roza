@@ -53,6 +53,10 @@ class TestUSNO_Data:
         assert date.second == 0
         assert date.utcoffset() is None
 
+    def test_day_of_year(self):
+        assert USNO_Data.day_of_year(2015, 2, 22) == 53
+        assert USNO_Data.day_of_year(2016, 4, 1) == 92
+
     def test_get_data(self):
         with self.recorder.use_cassette('get_data'):
             self.usno_data.get_data(self.year)

@@ -50,6 +50,10 @@ class USNO_Data:
         return datetime.strptime(datetime_string, "%Y-%m-%d %H%M %Z")
 
     @staticmethod
+    def day_of_year(year, month, day):
+        return datetime(year, month, day).timetuple().tm_yday
+
+    @staticmethod
     def extract_times(year, data):
         sunrises = [[], [], [], [], [], [], [], [], [], [], [], []]
         sunsets = [[], [], [], [], [], [], [], [], [], [], [], []]
