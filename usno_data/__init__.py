@@ -55,25 +55,22 @@ class USNO_Data:
 
     @staticmethod
     def extract_times(year, data):
-        sunrises = [[], [], [], [], [], [], [], [], [], [], [], []]
-        sunsets = [[], [], [], [], [], [], [], [], [], [], [], []]
+        days_in_year = USNO_Data.day_of_year(year, 12, 31)
+        sunrises = [None for i in range(days_in_year)]
+        sunsets = [None for i in range(days_in_year)]
 
         lines = data.split("\n")[18:(18 + 31)]
         for line in lines:
             times = line.split()
-            if len(times) == 23:
-                [times.insert(i, None) for i in [3, 4]]
-            elif len(times) == 15:
-                [times.insert(i, None) for i in [3, 4, 7, 8, 11, 12, 17, 18, 21, 22]]
-
             day = int(times[0])
             for month in range(12):
-                sunrises[month].append(
-                    USNO_Data.as_datetime(year, month + 1, day, times[2*month + 1])
-                )
-                sunsets[month].append(
-                    USNO_Data.as_datetime(year, month + 1, day, times[2*(month + 1)])
-                )
+                try:
+                    actual_month = month + 1
+                    day_of_year = USNO_Data.day_of_year(year, actual_month, day) - 1
+                    sunrises[day_of_year] = USNO_Data.as_datetime(year, actual_month, day, times[2*month + 1])
+                    sunsets[day_of_year] = USNO_Data.as_datetime(year, actual_month, day, times[2*actual_month])
+                except:
+                    next
 
         return (sunrises, sunsets)
 
@@ -83,7 +80,9 @@ class USNO_Data:
         (self.sunrises, self.sunsets) = USNO_Data.extract_times(self.year, data.text)
 
     def sunrise(self, month, day):
-        return self.sunrises[month - 1][day - 1]
+        day_of_year = USNO_Data.day_of_year(self.year, month, day)
+        return self.sunrises[day_of_year - 1]
 
     def sunset(self, month, day):
-        return self.sunsets[month - 1][day - 1]
+        day_of_year = USNO_Data.day_of_year(self.year, month, day)
+        return self.sunsets[day_of_year - 1]
