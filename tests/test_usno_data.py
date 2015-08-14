@@ -60,8 +60,8 @@ class TestUSNO_Data:
     def test_get_data(self):
         with self.recorder.use_cassette('get_data'):
             self.usno_data.get_data(self.year)
-            assert self.usno_data.sunrises is not None
-            assert self.usno_data.sunsets is not None
+            assert self.usno_data.sunrises[-1] == USNO_Data.as_datetime(self.year, 12, 31, '0807')
+            assert self.usno_data.sunsets[-1] == USNO_Data.as_datetime(self.year, 12, 31, '1601')
 
     def test_sunrise(self):
         with self.recorder.use_cassette('get_sunrise'):

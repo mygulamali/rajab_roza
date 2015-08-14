@@ -62,14 +62,20 @@ class USNO_Data:
         lines = data.split("\n")[18:(18 + 31)]
         for line in lines:
             times = line.split()
+            if len(times) == 23: # end of Feburary
+                [times.insert(index, None) for index in [3, 4]]
+            elif len(times) == 15: # months with less than 31 days
+                [times.insert(index, None) for index in [3, 4, 7, 8, 11, 12, 17, 18, 21, 21]]
+
             day = int(times[0])
             for month in range(12):
                 try:
                     actual_month = month + 1
+                    # NB: next line with throw ValueError if day is out of range for specified month eg. 29/02/2015
                     day_of_year = USNO_Data.day_of_year(year, actual_month, day) - 1
                     sunrises[day_of_year] = USNO_Data.as_datetime(year, actual_month, day, times[2*month + 1])
                     sunsets[day_of_year] = USNO_Data.as_datetime(year, actual_month, day, times[2*actual_month])
-                except:
+                except ValueError:
                     next
 
         return (sunrises, sunsets)
