@@ -1,6 +1,7 @@
 from datetime import date as GregorianDate
 from math import floor
-from hijri_date.constants import *
+
+from rajab_roza.hijri_date.constants import *
 
 class HijriDate(object):
     def __init__(self, year=1432, month=4, date=20):

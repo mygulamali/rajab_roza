@@ -1,6 +1,6 @@
 import datetime
 import nose
-from hijri_date import HijriDate
+from rajab_roza.hijri_date import HijriDate
 
 class TestHijriDate:
     def setup(self):

@@ -1,7 +1,7 @@
 from betamax import Betamax
 import nose
 import requests
-from usno_data import USNO_Data
+from rajab_roza.usno_data import USNO_Data
 
 with Betamax.configure() as config:
     config.cassette_library_dir = 'tests/cassettes'

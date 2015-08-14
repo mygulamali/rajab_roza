@@ -1,8 +1,8 @@
 from datetime import timedelta
 import yaml
 
-from hijri_date import HijriDate
-from usno_data import USNO_Data
+from rajab_roza.hijri_date import HijriDate
+from rajab_roza.usno_data import USNO_Data
 
 class RajabRoza:
     def __init__(self, lat, lng, start_year, end_year):
