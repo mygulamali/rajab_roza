@@ -24,7 +24,7 @@ if __name__ == '__main__':
         for i in data_index_range
     ]
 
-    pyplot.fill_between(years, min_durations, max_durations)
+    pyplot.vlines(years, min_durations, max_durations, color='#006600', linewidth=10)
     pyplot.grid()
     pyplot.title("Duration of Rajab Roza in London")
     pyplot.xlabel("Hijri year")
