@@ -12,7 +12,7 @@ highlights the consecutive 10-year period for which these durations are minimal.
 
 ## Setup
 
-`pip install -f requirements.txt`
+`pip install -r requirements.txt`
 
 ## Usage
 
