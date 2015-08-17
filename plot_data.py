@@ -5,20 +5,23 @@ import matplotlib.pyplot as pyplot
 from rajab_roza import RajabRoza
 
 filename = "data/london-durations.yml"
+years = range(1430, 1461)
 
 def duration_in_hours(duration):
     return duration.total_seconds()/3600.0
 
 if __name__ == '__main__':
     rajab_roza = RajabRoza.load_from_yaml(filename)
-    years = range(rajab_roza.start_year, rajab_roza.end_year + 1)
+    start_index = years[0] - rajab_roza.start_year
+    data_index_range = range(start_index, start_index + len(years))
+
     min_durations = [
         duration_in_hours(rajab_roza.durations[i][0])
-        for i in range(len(years))
+        for i in data_index_range
     ]
     max_durations = [
         duration_in_hours(rajab_roza.durations[i][1])
-        for i in range(len(years))
+        for i in data_index_range
     ]
 
     pyplot.fill_between(years, min_durations, max_durations)
