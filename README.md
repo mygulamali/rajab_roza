@@ -16,8 +16,10 @@ highlights the consecutive 10-year period for which these durations are minimal.
 
 ## Usage
 
-`python get_data.py`
-`python plot_data.py`
+```shell
+python get_data.py
+python plot_data.py
+```
 
 ## Testing
 
